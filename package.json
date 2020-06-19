@@ -1,0 +1,23 @@
+{
+  "name": "online_craftguide",
+  "version": "1.0.0",
+  "description": "Minetest Online Craftguide",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appgurueu/online_craftguide.git"
+  },
+  "keywords": [
+    "minetest",
+    "mod",
+    "craftguide",
+    "online"
+  ],
+  "author": "appguru",
+  "bugs": {
+    "url": "https://github.com/appgurueu/online_craftguide/issues"
+  },
+  "homepage": "https://github.com/appgurueu/online_craftguide",
+  "dependencies": {
+    "bootstrap-icons": "^1.0.0-alpha4"
+  }
+}

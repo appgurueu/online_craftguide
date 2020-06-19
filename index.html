@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="online_craftguide mod">
+  <meta name="description" content="An online crafting guide for Minetest">
+  <meta property="og:image" content="favicon.png">
+  <meta property="og:description" content="An online crafting guide for Minetest">
+  <meta property="og:title" content="Minetest Crafting Guide">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <style>
+    img.img-item {
+      image-rendering: auto;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+    }
+
+    svg.icon-arrow-craft {
+      font-size: 2.5em;
+    }
+
+    div.card-item {
+      width: 6em;
+    }
+
+    @media (max-width: 576px) {
+      div.card-item {
+        width: 4em;
+      }
+    }
+  </style>
+
+  <title>Minetest Crafting Guide</title>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Minetest Crafting Guide</h1>
+
+    <div class="input-group my-3">
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-danger" type="button"><svg class="bi bi-x">
+            <!-- icon will be inserted here --></svg></button>
+      </div>
+      <input type="text" class="form-control" placeholder="Search" aria-label="Search" id="search">
+      <div class="input-group-append">
+        <button class="btn btn-outline-success" type="button" id="search-btn"><svg class="bi bi-search">
+            <!-- icon will be inserted here --></svg></button>
+      </div>
+    </div>
+
+    <div id="recipe"></div>
+    <div class="d-inline-flex justify-content-left flex-wrap mx-auto" id="items"></div>
+    <noscript>
+      <div class="alert alert-danger fade show" role="alert">
+        <strong>Error!</strong> This website requires JavaScript to work. Enable JavaScript in your browser and <a href="">reload</a> the page.
+      </div>
+    </noscript>
+  </main>
+  <div class="modal modal-fade" id="modal-item-info" tabindex="-1" role="information" style="display: none;"
+    aria-labelledby="modal-item-info-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-item-info-label">
+            <!-- title will be inserted by JS -->
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- body will be inserted by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="container">
+    <hr>
+    <a class="float-right btn btn-secondary rounded-circle px-2 py-1" href="#">
+      <svg class="bi bi-chevron-up">
+        <!-- icon will be inserted here --></svg>
+    </a>
+    <p>Site generated using the <a href="https://github.com/appgurueu/online_craftguide">online craftguide mod</a>.</p>
+  </footer>
+
+  <script src="online_craftguide">
+    /* item defs & recipes will be inserted here by the mod */
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script>
+    const arrow = '<svg class="bi bi-arrow-right icon-arrow-craft"><!-- icon will be inserted here --></svg>';
+  </script>
+  <script src="craftguide.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
