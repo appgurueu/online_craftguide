@@ -1,5 +1,5 @@
 local function serialize_stack(stack)
-    return {stack:get_name() or "", stack:get_definition().type == "tool" and stack:get_wear() or stack:get_count()}
+    return { stack:get_name() or "", stack:get_definition().type == "tool" and stack:get_wear() or stack:get_count() }
 end
 item_defs = {}
 usages = {}
@@ -16,7 +16,7 @@ local function get_craft_recipes(def_name)
         local width = craft.width > 0 and craft.width or 1
         for i = #craft.items, width, -width do
             local keep_line
-            for j = i, math.max(1, i-width), -1 do
+            for j = i, math.max(1, i - width), -1 do
                 local item = craft.items[j]
                 if item and item ~= "" then
                     keep_line = true
@@ -24,7 +24,7 @@ local function get_craft_recipes(def_name)
                 end
             end
             if not keep_line then
-                for j = i, math.max(1, i-width), -1 do
+                for j = i, math.max(1, i - width), -1 do
                     table.remove(craft.items, j)
                 end
             end
@@ -51,7 +51,7 @@ local function get_craft_recipes(def_name)
         for _, item in ipairs(craft.items or {}) do
             local itemname = ItemStack(item):get_name()
             if not item_defs[itemname] then
-                usages[itemname] = {craft_index}
+                usages[itemname] = { craft_index }
             else
                 local tab = item_defs[itemname].usages
                 if not tab then
@@ -66,17 +66,17 @@ local function get_craft_recipes(def_name)
     end
     return item_crafts
 end
-local handle = io.open(minetest.get_modpath("online_craftguide").."/docs/index.html", "w")
+local handle = io.open(minetest.get_modpath("online_craftguide") .. "/docs/index.html", "w")
 function minetest_to_html(text)
     local previous_color
     text = text:gsub("<", "&lt;"):gsub("'", "&apos;"):gsub('"', "&quot;"):gsub("\x1b%((%a)@(.-)%)", function(type, args)
         if type == "c" and previous_color ~= args then
-            local retval = (previous_color and "</span>" or "").."<span style='color: "..args.." !important;'>"
+            local retval = (previous_color and "</span>" or "") .. "<span style='color: " .. args .. " !important;'>"
             previous_color = args
             return retval
         end
         return ""
-    end):gsub("\n", "<br>"):gsub("\x1bE", "")
+    end)       :gsub("\n", "<br>"):gsub("\x1bE", "")
     return text .. (previous_color and "</span>" or "")
 end
 function minetest_to_searchable(text)
@@ -114,9 +114,11 @@ function add_item(name, def)
 end
 function preprocess_html(text)
     local regex = [[(<svg%s+class=['"]bi%sbi%-)(.-)(['"].->.-</svg>)]]
-    text = text:gsub(regex, function(_,match)
-        local svg = modlib.file.read(minetest.get_modpath("online_craftguide").."/node_modules/bootstrap-icons/icons/"..modlib.text.split(match, "%s", 2, true)[1]..".svg")
-        return svg:gsub(regex, function(before, _, after) return before .. match .. after end):gsub("\n", "")
+    text = text:gsub(regex, function(_, match)
+        local svg = modlib.file.read(minetest.get_modpath("online_craftguide") .. "/node_modules/bootstrap-icons/icons/" .. modlib.text.split(match, "%s", 2, true)[1] .. ".svg")
+        return svg:gsub(regex, function(before, _, after)
+            return before .. match .. after
+        end):gsub("\n", "")
     end)
     local replaced
     text = text:gsub([[<script%s*src=['"]online_craftguide['"]>.-</script>]], function()
@@ -124,7 +126,7 @@ function preprocess_html(text)
             error("multiple script tags")
         end
         replaced = true
-        return "<script>items = "..minetest.write_json(item_defs).."; crafts = "..minetest.write_json(crafts).."; groups = "..minetest.write_json(groups).."</script>"
+        return "<script>items = " .. minetest.write_json(item_defs) .. "; crafts = " .. minetest.write_json(crafts) .. "; groups = " .. minetest.write_json(groups) .. "</script>"
     end)
     return text
 end
