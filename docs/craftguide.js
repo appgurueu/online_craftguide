@@ -130,10 +130,9 @@ function detailedItemInfo(itemname) {
         groups.sort((a, b) => a.rating < b.rating ? -1 : 1);
         for (let index in groups) {
             let group = groups[index];
-            // badge-rating-' + group.rating + '
             groups[index] = '<button class="btn btn-sm btn-primary badge badge-group" data-group="'+group.data+'">' + group.group + ' <span class="badge badge-light">' + group.rating + '</span></button>';
         }
-        addDefinition("Groups", groups.join(" "));   
+        addDefinition("Groups", groups.join(" "));
     }
     body += "</dl>";
     if (item.aliases) {
@@ -197,8 +196,6 @@ function updateSearch() {
 
 $("#search").on("change", updateSearch);
 $("#search-btn").on("input", updateSearch);
-$(function() {
-    updateSearch();
-});
+$(updateSearch);
 
 renderItemList(searchItems());
