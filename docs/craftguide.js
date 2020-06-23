@@ -195,7 +195,11 @@ function updateSearch() {
 }
 
 $("#search").on("change", updateSearch);
-$("#search-btn").on("input", updateSearch);
+$("#search-btn").on("click", updateSearch);
+$("#clear-btn").on("click", function() {
+    $("#search").val("");
+    updateSearch();
+});
 $(updateSearch);
 
 renderItemList(searchItems());

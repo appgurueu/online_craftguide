@@ -69,18 +69,17 @@ end
 local handle = io.open(minetest.get_modpath("online_craftguide") .. "/docs/index.html", "w")
 function minetest_to_html(text)
     local previous_color
-    text = text:gsub("<", "&lt;"):gsub("'", "&apos;"):gsub('"', "&quot;"):gsub("\x1b%((%a)@(.-)%)", function(type, args)
+    return text:gsub("<", "&lt;"):gsub("'", "&apos;"):gsub('"', "&quot;"):gsub("\n", "<br>"):gsub("\27E", ""):gsub("\27%((%a)@(.-)%)", function(type, args)
         if type == "c" and previous_color ~= args then
             local retval = (previous_color and "</span>" or "") .. "<span style='color: " .. args .. " !important;'>"
             previous_color = args
             return retval
         end
         return ""
-    end)       :gsub("\n", "<br>"):gsub("\x1bE", "")
-    return text .. (previous_color and "</span>" or "")
+    end) .. (previous_color and "</span>" or "")
 end
 function minetest_to_searchable(text)
-    return text:gsub("\x1b%((%a)@(.-)%)", ""):gsub("\x1bE", ""):lower()
+    return text:gsub("\27%((%a)@(.-)%)", ""):gsub("\27E", ""):lower()
 end
 function add_item(name, def)
     if (def.groups and def.groups.not_in_creative_inventory) or def.description == "" then
@@ -114,21 +113,19 @@ function add_item(name, def)
 end
 function preprocess_html(text)
     local regex = [[(<svg%s+class=['"]bi%sbi%-)(.-)(['"].->.-</svg>)]]
-    text = text:gsub(regex, function(_, match)
+    local replaced
+    return text:gsub(regex, function(_, match)
         local svg = modlib.file.read(minetest.get_modpath("online_craftguide") .. "/node_modules/bootstrap-icons/icons/" .. modlib.text.split(match, "%s", 2, true)[1] .. ".svg")
         return svg:gsub(regex, function(before, _, after)
             return before .. match .. after
         end):gsub("\n", "")
-    end)
-    local replaced
-    text = text:gsub([[<script%s*src=['"]online_craftguide['"]>.-</script>]], function()
+    end):gsub([[<script%s*src=['"]online_craftguide['"]>.-</script>]], function()
         if replaced then
             error("multiple script tags")
         end
         replaced = true
         return "<script>items = " .. minetest.write_json(item_defs) .. "; crafts = " .. minetest.write_json(crafts) .. "; groups = " .. minetest.write_json(groups) .. "</script>"
     end)
-    return text
 end
 minetest.register_on_mods_loaded(function()
     for name, def in pairs(minetest.registered_items) do
