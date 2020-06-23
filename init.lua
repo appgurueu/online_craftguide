@@ -136,6 +136,7 @@ minetest.register_on_mods_loaded(function()
             table.sort(item.aliases)
         end
     end
-    handle:write(preprocess_html(modlib.file.read(modlib.mod.get_resource("online_craftguide", "index.html"))))
+    local html = preprocess_html(modlib.file.read(modlib.mod.get_resource("online_craftguide", "index.html")))
+    handle:write(html)
     handle:close()
 end)
