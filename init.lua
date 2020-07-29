@@ -1,1 +1,1 @@
-modlib.mod.init("online_craftguide")
+modlib.mod.init()
