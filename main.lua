@@ -115,7 +115,7 @@ function preprocess_html(text)
     local regex = [[(<svg%s+class=['"]bi%sbi%-)(.-)(['"].->.-</svg>)]]
     local replaced
     return text:gsub(regex, function(_, match)
-        local svg = modlib.file.read(minetest.get_modpath("online_craftguide") .. "/node_modules/bootstrap-icons/icons/" .. modlib.text.split(match, "%s", 2, true)[1] .. ".svg")
+        local svg = modlib.file.read(minetest.get_modpath("online_craftguide") .. "/node_modules/bootstrap-icons/icons/" .. match:match"%S+" .. ".svg")
         return svg:gsub(regex, function(before, _, after)
             return before .. match .. after
         end):gsub("\n", "")
